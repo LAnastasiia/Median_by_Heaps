@@ -9,7 +9,9 @@ class Heap:
     def add_element(self, element):
         self.arr.insert(0, element)
         self.heap_size += 1
-        self.heapify(0)
+        # Restore structure's order.
+        for i in reversed(range(math.floor(self.heap_size / 2))):
+            self.heapify(i)
 
     def del_element(self, ind):
         del self.arr[ind]
