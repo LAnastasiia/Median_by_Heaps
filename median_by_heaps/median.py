@@ -7,9 +7,9 @@ class Heap:
         self.arr = []
 
     def add_element(self, element):
-        self.arr.insert(0, element)
+        self.arr.append(element)
+        self.up_heapify(self.heap_size - 1)
         self.heap_size += 1
-        # Restore structure's order.
         for i in reversed(range(math.floor(self.heap_size / 2))):
             self.heapify(i)
 
@@ -34,6 +34,14 @@ class Heap:
             return 2 * ind + 2
         else:
             return ind
+            
+    def up_heapify(self, ind):
+        if ind > 0:
+            parent_ind = self.parent(ind)
+            higher = self.compare([(ind, self.arr[ind]), (parent_ind, self.arr[parent_ind])])
+            if ind == higher:
+                self.arr[ind], self.arr[parent_ind] = self.arr[parent_ind], self.arr[ind]
+                self.up_heapify(parent_ind)
 
     def heap_peak(self):
         return self.arr[0]
@@ -126,18 +134,5 @@ class Median:
         return  self.upper_heap.arr
 
 
-
-
-if __name__ == "__main__":
-
-    # Basic test.
-    m = Median()
-    for i in range(1, 101):
-        m.add_element(i)
-        print(m.get_median())
-    # for i in range(m.lower_heap.heap_size):
-        # print(m.lower_heap.arr[i], i, ':', m.lower_heap.parent(i), m.lower_heap.left(i), m.lower_heap.right(i))
-    print(m.lower_heap.arr)
-    print("\nMedian result:", m.get_median())
 
 
